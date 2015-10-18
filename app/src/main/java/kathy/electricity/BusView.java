@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -28,47 +31,71 @@ import java.util.Map;
  */
 public class BusView extends View implements AsyncResponse{
     private Drawable mSmiley;
+    private Drawable mDevil;
 
     private int mX = -1;
     private int mY = 0;
     private int mSmileySize = 50;
-    private int mSeatWidth = 80;
-    private int mSeatHeight = 63;
-    private int mSeatOffsetX = 233;
-    private int mSeatOffsetY = 300;
+    private int mSeatWidthPict = 100;
+    private int mSeatHeightPict = 90;
+    private int mSeatOffsetXPict = 295;
+    private int mSeatOffsetYPict = 420;
+    private int mPictWidth = 960;
+    private int mPictHeight = 1440;
+    private int mSeatWidth;
+    private int mSeatHeight;
+    private int mSeatOffsetX;
+    private int mSeatOffsetY;
+    private boolean mDrawDevil = false;
+    private String android_id;
 
     private float mScaleFactor = 1.f;
-    private Map mSeating;
+    private Map<String,String> mSeating;
 
     private Toast mToast;
+
 
     public BusView (Context c, AttributeSet attrs) {
         super(c, attrs);
 
         mToast = null;
-        this.mSeating = new HashMap();
+        this.mSeating = new HashMap<>();
 
         this.setBackgroundResource(R.drawable.busview);
         mSmiley = getResources().getDrawable(R.drawable.smiley);
-
-        String urlString = "http://www.hemma.org/rebusarna/rebusar.php";
+        mDevil = getResources().getDrawable(R.drawable.devil);
+        android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        String urlString = "http://www.hemma.org/rebusarna/rebusar.php?user_id="+android_id;
         CallAPI server = new CallAPI();
         server.responses = this;
+        server.overideSleep = true;
         server.execute(urlString);
-
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        mSeatWidth = mSeatWidthPict*canvas.getWidth()/mPictWidth;
+        mSeatHeight = mSeatHeightPict*canvas.getHeight()/mPictHeight;
+        mSeatOffsetX = mSeatOffsetXPict*canvas.getWidth()/mPictWidth;
+        mSeatOffsetY = mSeatOffsetYPict*canvas.getHeight()/mPictHeight;
 //        canvas.setBounds(0,0,960,1440);
+        if (mDrawDevil) {
+            mDevil.setBounds(0, 0, mSmileySize * 2, mSmileySize * 2);
+            canvas.save();
+            canvas.translate(mSeatOffsetX + 5 * canvas.getWidth() / mPictWidth, mSeatOffsetY - 180 * canvas.getHeight() / mPictHeight);
+            mDevil.draw(canvas);
+            canvas.restore();
+        }
+
         mSmiley.setBounds(0, 0, mSmileySize, mSmileySize);
         canvas.save();
         canvas.translate(mSeatOffsetX - mSmileySize/2, mSeatOffsetY - mSmileySize/2);
         for(int j=0; j < 5; j++) {
             for (int i = 0; i < 8; i++) {
                 canvas.translate(0, mSeatHeight);
-                if ((mX == j && mY == i) || mSeating.containsKey(new Integer(j+i*5).toString()))
+                if ((mX == j && mY == i) || mSeating.containsKey(Integer.toString(j+i*5)))
                     mSmiley.draw(canvas);
             }
             canvas.translate(0, -mSeatHeight * 8);
@@ -82,10 +109,27 @@ public class BusView extends View implements AsyncResponse{
         int x = (int)((e.getX() - mSeatOffsetX + mSmileySize/2) / mSeatWidth);
         int y = (int)((e.getY() - mSeatOffsetY - mSmileySize/2) / mSeatHeight);
 
+        String pos = Integer.toString(x+y*5);
+
+        if(e.getAction() == MotionEvent.ACTION_UP) {
+            if (e.getX() > mSeatOffsetX && e.getX() < (mSeatOffsetX + mSmileySize * 3) && e.getY() < mSeatOffsetY)
+                mDrawDevil = !mDrawDevil;
+
+            String urlString;
+            if (x >= 0 && y >= 0) {
+                urlString = "http://www.hemma.org/rebusarna/rebusar.php?action=\"updateSeating\"&user_id=" + android_id + "&pos=" + pos;
+            } else
+                urlString = "http://www.hemma.org/rebusarna/rebusar.php?action=\"updateSeating\"&user_id="+android_id+"&pos=-1";
+
+            CallAPI server = new CallAPI();
+            server.responses = this;
+            server.overideSleep = true;
+            server.execute(urlString);
+        }
+
         if (mToast != null) {
             mToast.cancel();
         }
-        String pos = new Integer(x+y*5).toString();
         if(mSeating.containsKey(pos))
         {
             mToast = Toast.makeText(this.getContext(), "Profile for seat " + pos + "\n - Spanska\n - Chalmers", Toast.LENGTH_SHORT);
@@ -100,6 +144,7 @@ public class BusView extends View implements AsyncResponse{
 
     @Override
     public void processFinish(String output) {
+        mSeating.clear();
         try {
 
             JSONArray jArray = (new JSONObject(output)).getJSONArray("seating");
@@ -107,24 +152,32 @@ public class BusView extends View implements AsyncResponse{
                 JSONObject jObject = jArray.getJSONObject(i);
                 String pos = jObject.getString("pos");
                 String id = jObject.getString("id");
-                mSeating.put(pos, id);
+                if (!pos.equals("") && !id.equals("")) {
+                    mSeating.put(pos, id);
+                }
                 invalidate();
             }
         } catch (JSONException e) {
             Log.d("", e.getMessage());
         }
+        CallAPI server = new CallAPI();
+        server.responses = this;
+        server.execute("http://www.hemma.org/rebusarna/rebusar.php?user_id="+android_id);
     }
 
     private class CallAPI extends AsyncTask<String, String, String> {
         public AsyncResponse responses;
-
+        public boolean overideSleep = false;
         @Override
         protected String doInBackground(String... params) {
             String urlString=params[0]; // URL to call
 
-            String resultToDisplay = "";
+            String resultToDisplay;
 
-            InputStream in = null;
+            InputStream in;
+
+            if (!overideSleep)
+                SystemClock.sleep(1000);
 
             // HTTP Get
             try {
@@ -137,7 +190,7 @@ public class BusView extends View implements AsyncResponse{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
 
-                String line = null;
+                String line;
                 while ((line = reader.readLine()) != null)
                 {
                     sb.append(line);
@@ -153,7 +206,11 @@ public class BusView extends View implements AsyncResponse{
         }
 
         protected void onPostExecute(String result) {
-            responses.processFinish(result);
+            try {
+                responses.processFinish(result);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     } // end CallAPI
