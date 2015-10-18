@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class SnackActivity extends Activity {
+public class SnackActivity extends ButtonMenuBase {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

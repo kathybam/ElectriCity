@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.content.Intent;
-import android.widget.Button;
 
 
 public class MainActivity extends Activity {
@@ -39,6 +37,11 @@ public class MainActivity extends Activity {
     }
 
 
+    /** Called when the user clicks the Send button */
+    public void onBusClicked(View view) {
+        // Open the speech window
+        startActivity(new Intent(this, BusActivity.class));
+    }
 
 
     @Override

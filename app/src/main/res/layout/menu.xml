@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonSpeech"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="speechButton"
+        android:src="@mipmap/speech_launcher"
+        android:onClick="sendMessage"
+        android:clickable="true" />
+
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonBusstop"
+        android:src="@mipmap/busstop_launcher"
+        android:layout_alignTop="@+id/imageButtonSpeech"
+        android:layout_toEndOf="@+id/imageButtonSpeech"
+        android:longClickable="false" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonGreenBus"
+        android:src="@mipmap/greenbus_launcher"
+        android:layout_alignTop="@id/imageButtonBusstop"
+        android:layout_toEndOf="@+id/imageButtonBusstop"
+        android:onClick="onBusClicked"
+        android:longClickable="false" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonSettings"
+        android:src="@mipmap/settings_launcher"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/imageButtonGreenBus"
+        android:longClickable="false" />
+
+</LinearLayout>
