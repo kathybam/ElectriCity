@@ -26,6 +26,10 @@
             android:label="Buss" >
         </activity>
         <activity
+            android:name=".BusStopActivity"
+            android:label="@string/title_activity_busstop" >
+        </activity>
+        <activity
             android:name=".TapasActivity"
             android:label="@string/title_activity_tapas" >
         </activity>

@@ -11,6 +11,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_speech">SpeechActivity</string>
     <string name="title_activity_bus">Bus</string>
+    <string name="title_activity_busstop">Hållplats</string>
     <string name="title_activity_snack">Snack</string>
     <string name="title_activity_tapas">Tapas</string>
 

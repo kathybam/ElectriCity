@@ -33,13 +33,16 @@ public class BusView extends View implements AsyncResponse{
     private Drawable mSmiley;
     private Drawable mDevil;
 
+    public int mSeatOffsetXPict = 295;
+    public int mSeatOffsetYPict = 420;
+    public int mSeatWidthPict = 100;
+    public int mSeatHeightPict = 90;
+    public int mSeatNrX = 5;
+    public int mSeatNrY = 8;
+
     private int mX = -1;
     private int mY = 0;
     private int mSmileySize = 50;
-    private int mSeatWidthPict = 100;
-    private int mSeatHeightPict = 90;
-    private int mSeatOffsetXPict = 295;
-    private int mSeatOffsetYPict = 420;
     private int mPictWidth = 960;
     private int mPictHeight = 1440;
     private int mSeatWidth;
@@ -82,7 +85,7 @@ public class BusView extends View implements AsyncResponse{
         if (mDrawDevil) {
             mDevil.setBounds(0, 0, mSmileySize * 2, mSmileySize * 2);
             canvas.save();
-            canvas.translate(mSeatOffsetX + 5 * canvas.getWidth() / mPictWidth, mSeatOffsetY - 180 * canvas.getHeight() / mPictHeight);
+            canvas.translate(mSeatOffsetX + mSeatNrX * canvas.getWidth() / mPictWidth, mSeatOffsetY - 180 * canvas.getHeight() / mPictHeight);
             mDevil.draw(canvas);
             canvas.restore();
         }
@@ -90,13 +93,13 @@ public class BusView extends View implements AsyncResponse{
         mSmiley.setBounds(0, 0, mSmileySize, mSmileySize);
         canvas.save();
         canvas.translate(mSeatOffsetX - mSmileySize/2, mSeatOffsetY - mSmileySize/2);
-        for(int j=0; j < 5; j++) {
-            for (int i = 0; i < 8; i++) {
+        for(int j=0; j < mSeatNrX; j++) {
+            for (int i = 0; i < mSeatNrY; i++) {
                 canvas.translate(0, mSeatHeight);
-                if ((mX == j && mY == i) || mSeating.containsKey(Integer.toString(j+i*5)))
+                if ((mX == j && mY == i) || mSeating.containsKey(Integer.toString(j+i*mSeatNrX)))
                     mSmiley.draw(canvas);
             }
-            canvas.translate(0, -mSeatHeight * 8);
+            canvas.translate(0, -mSeatHeight * mSeatNrY);
             canvas.translate(mSeatWidth, 0);
         }
         canvas.restore();
@@ -107,7 +110,7 @@ public class BusView extends View implements AsyncResponse{
         int x = (int)((e.getX() - mSeatOffsetX + mSmileySize/2) / mSeatWidth);
         int y = (int)((e.getY() - mSeatOffsetY - mSmileySize/2) / mSeatHeight);
 
-        String pos = Integer.toString(x+y*5);
+        String pos = Integer.toString(x+y*mSeatNrX);
 
         if(e.getAction() == MotionEvent.ACTION_UP) {
             if (e.getX() > mSeatOffsetX && e.getX() < (mSeatOffsetX + mSmileySize * 3) && e.getY() < mSeatOffsetY)

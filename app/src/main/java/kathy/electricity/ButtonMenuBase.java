@@ -26,4 +26,9 @@ public class ButtonMenuBase extends Activity {
         startActivity(new Intent(this, BusActivity.class));
     }
 
+    /** Called when the user clicks the bus button */
+    public void onBusStopClicked(View view) {
+        // Open the speech window
+        startActivity(new Intent(this, BusStopActivity.class));
+    }
 }
