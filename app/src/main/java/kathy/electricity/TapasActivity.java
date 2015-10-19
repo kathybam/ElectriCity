@@ -41,11 +41,11 @@ public class TapasActivity extends ButtonMenuBase {
         return super.onOptionsItemSelected(item);
     }
 
-    /** Called when the user clicks the Speech button */
-    public void sendMessageSpeech(View view) {
+    /** Called when the user clicks the Speech button
+    public void onSpeechClicked(View view) {
         // Open the speech window
         startActivity(new Intent(this, SnackActivity.class));
-    }
+    }*/
 
 
 

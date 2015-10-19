@@ -31,7 +31,7 @@ public class MainActivity extends ButtonMenuBase {
 
 
     /** Called when the user clicks the Speech button */
-    public void sendMessageSpeech(View view) {
+    public void onSpeechClicked(View view) {
         // Open the speech window
         startActivity(new Intent(this, SnackActivity.class));
     }

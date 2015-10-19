@@ -9,7 +9,7 @@ import android.view.View;
  */
 public class ButtonMenuBase extends Activity {
     /** Called when the user clicks the balloon button*/
-    public void sendMessage(View view) {
+    public void onSpeechClicked(View view) {
         // Open the speech window
         startActivity(new Intent(this, SnackActivity.class));
     }
