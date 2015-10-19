@@ -4,46 +4,49 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="kathy.electricity.SnackActivity">
+    tools:context="kathy.electricity.SnackActivity"
+    android:clickable="true">
 
 
 
     <TextView android:text="Dagens Ämne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
+        android:id="@+id/textViewDagensAmne"
         style="@android:style/TextAppearance.DeviceDefault.Large"
         android:capitalize="words"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/textView4" />
+        android:layout_toEndOf="@+id/textViewElBussBenefits" />
+
+
+
 
     <TextView android:text="@string/question1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textViewTapas"
+        android:clickable="true"
+        android:onClick="sendMessageTapas"
+        android:singleLine="false"
+        android:linksClickable="false"
+        android:layout_below="@+id/textViewDagensAmne"
+        android:layout_marginTop="46dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/question2"
+        android:id="@+id/textViewQuestion2"
+        android:layout_below="@+id/textViewTapas"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true" />
-
-    <TextView android:text="@string/question2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true" />
-
-    <TextView android:text="@string/question3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
+        android:layout_marginTop="36dp" />
 
     <include layout="@layout/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/include" />
+
 
 </RelativeLayout>

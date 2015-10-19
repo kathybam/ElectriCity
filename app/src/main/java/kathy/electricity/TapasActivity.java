@@ -5,44 +5,26 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.content.Intent;
+import android.widget.Button;
 
+import kathy.electricity.R;
 
-public class MainActivity extends ButtonMenuBase {
-    //Button button;
+public class TapasActivity extends ButtonMenuBase {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-
-
+        setContentView(R.layout.activity_tapas);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_tapas, menu);
         return true;
     }
-
-
-
-
-    /** Called when the user clicks the Speech button */
-    public void sendMessageSpeech(View view) {
-        // Open the speech window
-        startActivity(new Intent(this, SnackActivity.class));
-    }
-
-
-    /** Called when the user clicks the Send button */
-    public void onBusClicked(View view) {
-        // Open the speech window
-        startActivity(new Intent(this, BusActivity.class));
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -58,4 +40,13 @@ public class MainActivity extends ButtonMenuBase {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /** Called when the user clicks the Speech button */
+    public void sendMessageSpeech(View view) {
+        // Open the speech window
+        startActivity(new Intent(this, SnackActivity.class));
+    }
+
+
+
 }

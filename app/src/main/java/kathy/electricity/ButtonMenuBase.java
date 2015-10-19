@@ -25,4 +25,5 @@ public class ButtonMenuBase extends Activity {
         // Open the speech window
         startActivity(new Intent(this, BusActivity.class));
     }
+
 }

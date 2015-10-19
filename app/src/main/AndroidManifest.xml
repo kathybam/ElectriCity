@@ -25,6 +25,10 @@
             android:name=".BusActivity"
             android:label="@string/title_activity_bus" >
         </activity>
+        <activity
+            android:name=".TapasActivity"
+            android:label="@string/title_activity_tapas" >
+        </activity>
     </application>
 
 </manifest>
