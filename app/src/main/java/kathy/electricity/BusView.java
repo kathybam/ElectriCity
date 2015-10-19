@@ -61,7 +61,6 @@ public class BusView extends View implements AsyncResponse{
         mToast = null;
         this.mSeating = new HashMap<>();
 
-        this.setBackgroundResource(R.drawable.busview);
         mSmiley = getResources().getDrawable(R.drawable.smiley);
         mDevil = getResources().getDrawable(R.drawable.devil);
         android_id = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -80,7 +79,6 @@ public class BusView extends View implements AsyncResponse{
         mSeatHeight = mSeatHeightPict*canvas.getHeight()/mPictHeight;
         mSeatOffsetX = mSeatOffsetXPict*canvas.getWidth()/mPictWidth;
         mSeatOffsetY = mSeatOffsetYPict*canvas.getHeight()/mPictHeight;
-//        canvas.setBounds(0,0,960,1440);
         if (mDrawDevil) {
             mDevil.setBounds(0, 0, mSmileySize * 2, mSmileySize * 2);
             canvas.save();

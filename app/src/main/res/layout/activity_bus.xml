@@ -13,7 +13,8 @@
         android:layout_height="fill_parent"
         android:id="@+id/busView"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/include" />
+        android:layout_above="@+id/include"
+        android:background="@drawable/busview_320"/>
 
     <include layout="@layout/menu"
         android:layout_width="wrap_content"
