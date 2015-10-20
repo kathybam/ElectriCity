@@ -17,10 +17,10 @@ public class SnackActivity extends ButtonMenuBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snack);
     }
-    /** Called when the user clicks the Tapas text */
+    /** Called when the user clicks the Tapas text
     public void onTapasClicked(View view) {
         // Open the speech window
         startActivity(new Intent(this, TapasActivity.class));
-    }
+    }*/
 
 }

@@ -20,10 +20,10 @@ public class ButtonMenuBase extends Activity {
         startActivity(new Intent(this, SnackActivity.class));
     }
 
-    /** Called when the user clicks the balloon button */
+    /** Called when the user clicks the Tapas question text button */
     public void onTapasClicked(View view) {
         // Open the speech window
-        startActivity(new Intent(this, SnackActivity.class));
+        startActivity(new Intent(this, TapasActivity.class));
     }
 
     /** Called when the user clicks the bus button */

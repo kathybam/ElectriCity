@@ -178,7 +178,7 @@ public class BusView extends View implements AsyncResponse{
             InputStream in;
 
             if (!overideSleep)
-                SystemClock.sleep(1000);
+                SystemClock.sleep(500);
 
             // HTTP Get
             try {
