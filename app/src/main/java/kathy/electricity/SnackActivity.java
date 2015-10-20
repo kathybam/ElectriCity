@@ -18,7 +18,7 @@ public class SnackActivity extends ButtonMenuBase {
         setContentView(R.layout.activity_snack);
     }
     /** Called when the user clicks the Tapas text */
-    public void sendMessageTapas(View view) {
+    public void onTapasClicked(View view) {
         // Open the speech window
         startActivity(new Intent(this, TapasActivity.class));
     }

@@ -26,7 +26,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/textViewTapas"
         android:clickable="true"
-        android:onClick="sendMessageTapas"
+        android:onClick="onTapasClicked"
         android:singleLine="false"
         android:linksClickable="false"
         android:layout_below="@+id/textViewDagensAmne"
